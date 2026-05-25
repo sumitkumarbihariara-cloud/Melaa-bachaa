@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Just For You 💕</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rose: #ff4d6d;
+    --blush: #ffb3c1;
+    --cream: #fff0f3;
+    --deep: #590d22;
+    --gold: #f4a261;
+    --soft: #fce4ec;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #0a0006;
+    color: white;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 20px; height: 20px;
+    background: var(--rose);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.2s ease;
+    mix-blend-mode: screen;
+  }
+
+  /* Floating hearts bg */
+  .hearts-bg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .heart-particle {
+    position: absolute;
+    font-size: 1.2rem;
+    animation: floatUp linear infinite;
+    opacity: 0;
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(110vh) rotate(0deg); opacity: 0.6; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+  }
+
+  /* Nav */
+  nav {
+    position: fixed;
+    top: 0; width: 100%;
+    z-index: 100;
+    padding: 1.2rem 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    background: rgba(10,0,6,0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255,77,109,0.2);
+  }
+
+  nav a {
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  nav a:hover { color: var(--rose); }
+
+  /* === HERO === */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    padding: 2rem;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(255,77,109,0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: pulse 4s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+  }
+
+  .hero-emoji {
+    font-size: 4rem;
+    animation: bounce 2s ease-in-out infinite;
+    margin-bottom: 1rem;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+
+  .hero h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(3rem, 8vw, 6rem);
+    background: linear-gradient(135deg, #ff4d6d, #f4a261, #ff4d6d);
+    background-size: 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 3s linear infinite;
+    line-height: 1.1;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
+
+  .hero p {
+    margin-top: 1rem;
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.6);
+    font-style: italic;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+    animation: fadeBounce 2s ease-in-out infinite;
+  }
+
+  @keyframes fadeBounce {
+    0%, 100% { opacity: 0.3; transform: translateY(0); }
+    50% { opacity: 0.8; transform: translateY(5px); }
+  }
+
+  /* === SECTIONS === */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 5rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    text-align: center;
+    margin-bottom: 3rem;
+    color: white;
+  }
+
+  .section-title span {
+    color: var(--rose);
+    font-style: italic;
+  }
+
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255,77,109,0.4), transparent);
+    margin: 4rem auto;
+  }
+
+  /* === OPEN WHEN LETTERS === */
+  .letters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .letter-card {
+    background: rgba(255,77,109,0.08);
+    border: 1px solid rgba(255,77,109,0.2);
+    border-radius: 20px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .letter-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,77,109,0.15), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .letter-card:hover::before { opacity: 1; }
+  .letter-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--rose);
+    box-shadow: 0 20px 40px rgba(255,77,109,0.2);
+  }
+
+  .letter-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+  .letter-when {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--rose);
+    margin-bottom: 0.3rem;
+  }
+  .letter-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: white;
+  }
+
+  /* Modal */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+  }
+
+  .modal-overlay.active { display: flex; }
+
+  .modal-box {
+    background: linear-gradient(135deg, #1a0010, #0a0006);
+    border: 1px solid rgba(255,77,109,0.4);
+    border-radius: 24px;
+    padding: 3rem;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    animation: modalIn 0.4s ease;
+  }
+
+  @keyframes modalIn {
+    from { transform: scale(0.8) translateY(20px); opacity: 0; }
+    to { transform: scale(1) translateY(0); opacity: 1; }
+  }
+
+  .modal-emoji { font-size: 3rem; margin-bottom: 1rem; }
+  .modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--rose);
+    margin-bottom: 1rem;
+  }
+  .modal-text {
+    color: rgba(255,255,255,0.8);
+    line-height: 1.8;
+    font-size: 1rem;
+  }
+  .modal-close {
+    position: absolute;
+    top: 1rem; right: 1.2rem;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.4);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .modal-close:hover { color: var(--rose); }
+
+  /* === REASONS === */
+  .reasons-wrapper {
+    position: relative;
+  }
+
+  .reason-counter {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    color: rgba(255,77,109,0.15);
+    line-height: 1;
+    position: absolute;
+    top: -1rem; left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .reasons-reveal {
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .reason-display {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    color: white;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeInUp 0.5s ease;
+    padding: 1rem;
+    line-height: 1.5;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reason-number {
+    font-size: 0.85rem;
+    color: var(--rose);
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+
+  .btn-next {
+    margin-top: 2rem;
+    padding: 1rem 3rem;
+    background: linear-gradient(135deg, var(--rose), #ff8fa3);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(255,77,109,0.3);
+  }
+
+  .btn-next:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 40px rgba(255,77,109,0.4);
+  }
+
+  /* === MOOD LIFT === */
+  .mood-center {
+    text-align: center;
+  }
+
+  .big-hug-btn {
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ff4d6d, #c9184a);
+    border: none;
+    cursor: pointer;
+    font-size: 4rem;
+    margin: 2rem auto;
+    display: block;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 60px rgba(255,77,109,0.4);
+    animation: heartbeat 1.5s ease-in-out infinite;
+  }
+
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    14% { transform: scale(1.1); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.05); }
+    70% { transform: scale(1); }
+  }
+
+  .big-hug-btn:hover {
+    box-shadow: 0 0 100px rgba(255,77,109,0.7);
+    transform: scale(1.05);
+  }
+
+  .mood-message {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: rgba(255,255,255,0.8);
+    min-height: 60px;
+    padding: 1rem;
+    animation: fadeInUp 0.5s ease;
+    line-height: 1.7;
+  }
+
+  /* === TIMELINE === */
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, transparent, var(--rose), transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 3rem;
+    padding-left: 2rem;
+    animation: slideIn 0.5s ease both;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -2.45rem;
+    top: 0.3rem;
+    width: 16px; height: 16px;
+    background: var(--rose);
+    border-radius: 50%;
+    border: 3px solid #0a0006;
+    box-shadow: 0 0 10px var(--rose);
+  }
+
+  .timeline-date {
+    font-size: 0.8rem;
+    color: var(--rose);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+
+  .timeline-event {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: white;
+    margin-bottom: 0.3rem;
+  }
+
+  .timeline-note {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.5);
+    font-style: italic;
+  }
+
+  /* === MEMORY WALL === */
+  .memory-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .memory-card {
+    aspect-ratio: 1;
+    border-radius: 16px;
+    background: rgba(255,77,109,0.08);
+    border: 1px solid rgba(255,77,109,0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .memory-card:hover {
+    background: rgba(255,77,109,0.15);
+    border-color: var(--rose);
+    transform: scale(1.05);
+  }
+
+  .memory-card .mem-emoji { font-size: 2rem; margin-bottom: 0.5rem; }
+  .memory-card .mem-title { font-size: 0.75rem; color: rgba(255,255,255,0.6); }
+
+  /* === PLAYLIST === */
+  .playlist-items { display: flex; flex-direction: column; gap: 1rem; }
+
+  .playlist-item {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.2rem 1.5rem;
+    background: rgba(255,77,109,0.06);
+    border: 1px solid rgba(255,77,109,0.15);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .playlist-item:hover {
+    background: rgba(255,77,109,0.12);
+    border-color: var(--rose);
+    transform: translateX(5px);
+  }
+
+  .playlist-num {
+    font-size: 0.8rem;
+    color: var(--rose);
+    min-width: 20px;
+  }
+
+  .playlist-icon { font-size: 1.5rem; }
+
+  .playlist-info { flex: 1; }
+  .playlist-song { font-weight: 500; color: white; font-size: 1rem; }
+  .playlist-why { font-size: 0.8rem; color: rgba(255,255,255,0.45); margin-top: 0.2rem; font-style: italic; }
+
+  .playlist-bar {
+    width: 60px; height: 3px;
+    background: rgba(255,77,109,0.2);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .playlist-fill {
+    height: 100%;
+    background: var(--rose);
+    border-radius: 2px;
+  }
+
+  /* === AFFIRMATION === */
+  .affirmation-box {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: rgba(255,77,109,0.06);
+    border: 1px solid rgba(255,77,109,0.2);
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .affirmation-box::before {
+    content: '❝';
+    position: absolute;
+    top: -1rem; left: 1rem;
+    font-size: 8rem;
+    color: rgba(255,77,109,0.06);
+    font-family: 'Playfair Display', serif;
+  }
+
+  .affirmation-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    color: white;
+    line-height: 1.7;
+    position: relative;
+  }
+
+  .affirmation-author {
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--rose);
+    letter-spacing: 0.1em;
+  }
+
+  .btn-new-affirmation {
+    margin-top: 1.5rem;
+    padding: 0.7rem 2rem;
+    background: transparent;
+    border: 1px solid var(--rose);
+    border-radius: 50px;
+    color: var(--rose);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .btn-new-affirmation:hover {
+    background: var(--rose);
+    color: white;
+  }
+
+  /* === FOOTER === */
+  footer {
+    text-align: center;
+    padding: 4rem 2rem 6rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  footer .footer-heart {
+    font-size: 3rem;
+    animation: heartbeat 1.5s ease-in-out infinite;
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  footer p {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem;
+    color: rgba(255,255,255,0.5);
+  }
+
+  footer p span { color: var(--rose); }
+
+  /* confetti */
+  .confetti-piece {
+    position: fixed;
+    width: 10px; height: 10px;
+    border-radius: 2px;
+    pointer-events: none;
+    z-index: 9998;
+    animation: confettiFall 3s ease-out forwards;
+  }
+
+  @keyframes confettiFall {
+    0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+
+  @media (max-width: 600px) {
+    nav { gap: 1rem; flex-wrap: wrap; }
+    .memory-grid { grid-template-columns: repeat(2, 1fr); }
+    .letters-grid { grid-template-columns: 1fr; }
+    .modal-box { padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<!-- Floating hearts -->
+<div class="hearts-bg" id="heartsBg"></div>
+
+<!-- Nav -->
+<nav>
+  <a href="#letters">Letters</a>
+  <a href="#reasons">Reasons</a>
+  <a href="#mood">Mood Lift</a>
+  <a href="#timeline">Timeline</a>
+  <a href="#memories">Memories</a>
+  <a href="#playlist">Playlist</a>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-emoji">💕</div>
+  <div class="hero">
+    <h1>This is just for you</h1>
+    <p>Made with every bit of love I have &nbsp;✨</p>
+  </div>
+  <div class="scroll-hint">↓ scroll ↓</div>
+</div>
+
+<!-- OPEN WHEN LETTERS -->
+<section id="letters">
+  <h2 class="section-title">Open <span>When...</span></h2>
+  <div class="letters-grid">
+    <div class="letter-card" onclick="openLetter('sad')">
+      <div class="letter-icon">🥺</div>
+      <div class="letter-when">Open When</div>
+      <div class="letter-title">You're feeling sad</div>
+    </div>
+    <div class="letter-card" onclick="openLetter('angry')">
+      <div class="letter-icon">😤</div>
+      <div class="letter-when">Open When</div>
+      <div class="letter-title">You're angry at me</div>
+    </div>
+    <div class="letter-card" onclick="openLetter('miss')">
+      <div class="letter-icon">💭</div>
+      <div class="letter-when">Open When</div>
+      <div class="letter-title">You miss me</div>
+    </div>
+    <div class="letter-card" onclick="openLetter('tired')">
+      <div class="letter-icon">😮‍💨</div>
+      <div class="letter-when">Open When</div>
+      <div class="letter-title">You're tired of everything</div>
+    </div>
+    <div class="letter-card" onclick="openLetter('happy')">
+      <div class="letter-icon">🌟</div>
+      <div class="letter-when">Open When</div>
+      <div class="letter-title">You want to smile</div>
+    </div>
+    <div class="letter-card" onclick="openLetter('night')">
+      <div class="letter-icon">🌙</div>
+      <div class="letter-when">Open When</div>
+      <div class="letter-title">You can't sleep</div>
+    </div>
+  </div>
+</section>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeLetter()">✕</button>
+    <div class="modal-emoji" id="modalEmoji"></div>
+    <div class="modal-title" id="modalTitle"></div>
+    <div class="modal-text" id="modalText"></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- REASONS I LOVE YOU -->
+<section id="reasons">
+  <h2 class="section-title">Reasons I <span>Love You</span></h2>
+  <div class="reasons-reveal">
+    <div class="reason-number" id="reasonNum">Reason #1</div>
+    <div class="reason-display" id="reasonText">"Click to reveal..."</div>
+    <button class="btn-next" onclick="nextReason()">Next Reason 💫</button>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- MOOD LIFT -->
+<section id="mood">
+  <h2 class="section-title">Need a <span>Hug?</span></h2>
+  <div class="mood-center">
+    <p style="color:rgba(255,255,255,0.5); margin-bottom:1rem;">Press the button for an instant hug 🤗</p>
+    <button class="big-hug-btn" onclick="sendHug()">🤗</button>
+    <div class="mood-message" id="moodMsg">I'm always here for you 💕</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <h2 class="section-title">Our <span>Story</span></h2>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">The Beginning ✨</div>
+      <div class="timeline-event">The Day We Met</div>
+      <div class="timeline-note">The universe decided we needed to find each other 💫</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">First Time 🦋</div>
+      <div class="timeline-event">First Conversation</div>
+      <div class="timeline-note">I didn't know this would change everything...</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">The Moment 💘</div>
+      <div class="timeline-event">When I Realized I Like You</div>
+      <div class="timeline-note">My heart just... knew.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">Forever 🔐</div>
+      <div class="timeline-event">We Became "Us"</div>
+      <div class="timeline-note">The best decision I ever made 🥹</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">Right Now 🌹</div>
+      <div class="timeline-event">Today & Every Day</div>
+      <div class="timeline-note">Still falling for you, every single day.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- MEMORY WALL -->
+<section id="memories">
+  <h2 class="section-title">Our <span>Moments</span></h2>
+  <div class="memory-grid">
+    <div class="memory-card">
+      <div class="mem-emoji">🌅</div>
+      <div class="mem-title">First date energy</div>
+    </div>
+    <div class="memory-card">
+      <div class="mem-emoji">☕</div>
+      <div class="mem-title">Late night talks</div>
+    </div>
+    <div class="memory-card">
+      <div class="mem-emoji">🎵</div>
+      <div class="mem-title">Our song playing</div>
+    </div>
+    <div class="memory-card">
+      <div class="mem-emoji">😂</div>
+      <div class="mem-title">Our silly jokes</div>
+    </div>
+    <div class="memory-card">
+      <div class="mem-emoji">🤝</div>
+      <div class="mem-title">When we made up</div>
+    </div>
+    <div class="memory-card">
+      <div class="mem-emoji">💌</div>
+      <div class="mem-title">Sweet messages</div>
+    </div>
+    <div class="memory-card">
+      <div class="mem-emoji">🌙</div>
+      <div class="mem-title">Goodnight texts</div>
+    </div>
+    <div class="memory-card">
+      <div class="mem-emoji">🫶</div>
+      <div class="mem-title">Just being us</div>
+    </div>
+    <div class="memory-card">
+      <div class="mem-emoji">✨</div>
+      <div class="mem-title">Every little thing</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PLAYLIST -->
+<section id="playlist">
+  <h2 class="section-title">Songs that <span>Feel Like You</span></h2>
+  <div class="playlist-items">
+    <div class="playlist-item">
+      <div class="playlist-num">01</div>
+      <div class="playlist-icon">🎵</div>
+      <div class="playlist-info">
+        <div class="playlist-song">Perfect — Ed Sheeran</div>
+        <div class="playlist-why">Because you are, genuinely, perfect to me.</div>
+      </div>
+      <div class="playlist-bar"><div class="playlist-fill" style="width:90%"></div></div>
+    </div>
+    <div class="playlist-item">
+      <div class="playlist-num">02</div>
+      <div class="playlist-icon">🎶</div>
+      <div class="playlist-info">
+        <div class="playlist-song">Tum Hi Ho — Arijit Singh</div>
+        <div class="playlist-why">Tumhare bina sab adhoora hai.</div>
+      </div>
+      <div class="playlist-bar"><div class="playlist-fill" style="width:95%"></div></div>
+    </div>
+    <div class="playlist-item">
+      <div class="playlist-num">03</div>
+      <div class="playlist-icon">🎵</div>
+      <div class="playlist-info">
+        <div class="playlist-song">Can't Help Falling in Love — Elvis</div>
+        <div class="playlist-why">I can't help it — I just love you.</div>
+      </div>
+      <div class="playlist-bar"><div class="playlist-fill" style="width:85%"></div></div>
+    </div>
+    <div class="playlist-item">
+      <div class="playlist-num">04</div>
+      <div class="playlist-icon">🎶</div>
+      <div class="playlist-info">
+        <div class="playlist-song">Raataan Lambiyan — Jubin Nautiyal</div>
+        <div class="playlist-why">Yeh raatein teri yaadon mein guzarti hain.</div>
+      </div>
+      <div class="playlist-bar"><div class="playlist-fill" style="width:88%"></div></div>
+    </div>
+    <div class="playlist-item">
+      <div class="playlist-num">05</div>
+      <div class="playlist-icon">🎵</div>
+      <div class="playlist-info">
+        <div class="playlist-song">All of Me — John Legend</div>
+        <div class="playlist-why">All of you — I love all of it.</div>
+      </div>
+      <div class="playlist-bar"><div class="playlist-fill" style="width:92%"></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- AFFIRMATION -->
+<section id="affirmation" style="padding-bottom: 2rem;">
+  <h2 class="section-title">Just <span>Remember...</span></h2>
+  <div class="affirmation-box">
+    <div class="affirmation-text" id="affirmText">
+      You are allowed to have hard days. You are allowed to feel everything. That doesn't make you weak — it makes you human. And I love every version of you. 🌸
+    </div>
+    <div class="affirmation-author">— Always yours 💌</div>
+    <button class="btn-new-affirmation" onclick="newAffirmation()">Another one ✨</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-heart">💕</span>
+  <p>Made with <span>infinite love</span>, just for you.</p>
+</footer>
+
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX - 10 + 'px';
+    cursor.style.top = e.clientY - 10 + 'px';
+  });
+
+  // Floating hearts
+  const heartsBg = document.getElementById('heartsBg');
+  const heartEmojis = ['💕','💗','💖','✨','🌸','💓','💝'];
+  for (let i = 0; i < 20; i++) {
+    const h = document.createElement('div');
+    h.className = 'heart-particle';
+    h.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+    h.style.left = Math.random() * 100 + 'vw';
+    h.style.animationDuration = (8 + Math.random() * 12) + 's';
+    h.style.animationDelay = (Math.random() * 10) + 's';
+    h.style.fontSize = (0.8 + Math.random() * 1.2) + 'rem';
+    heartsBg.appendChild(h);
+  }
+
+  // Letters
+  const letters = {
+    sad: {
+      emoji: '🥺',
+      title: 'Hey, it\'s okay to be sad.',
+      text: 'You don\'t have to pretend to be okay all the time. I know this phase is tough, and your feelings are completely valid. Just know that no matter how you\'re feeling right now, I\'m here. Always. You\'re not alone in this. This will pass, and I\'ll be right here holding your hand through all of it. 💕'
+    },
+    angry: {
+      emoji: '😤',
+      title: 'Even when you\'re mad at me...',
+      text: 'I know I\'m not perfect. And you have every right to feel what you feel. But even in your anger, please know — I love you more than my own stubbornness. I\'d rather fix things with you than be right. So whenever you\'re ready, I\'m here. No grudges, just us. 🫶'
+    },
+    miss: {
+      emoji: '💭',
+      title: 'Missing me? I miss you more.',
+      text: 'I think about you constantly. The way you laugh, the way you talk, the way you make everything feel warmer. Distance is just distance — it can\'t touch what we have. Close your eyes and know that wherever I am, I\'m thinking about you right now. 🌙'
+    },
+    tired: {
+      emoji: '😮‍💨',
+      title: 'It\'s okay to rest, jaan.',
+      text: 'The world expects so much from you. But you don\'t have to carry it all right now. Put it down for a moment. You are enough, exactly as you are — tired, messy, and real. Rest. I\'ll be here when you\'re ready to take on the world again. And when you are, I\'ll be right beside you. 💛'
+    },
+    happy: {
+      emoji: '🌟',
+      title: 'Here\'s your smile for today:',
+      text: 'Remember that one time you laughed SO hard at something stupid? Yeah. That laugh. That\'s my favorite sound in the whole world. Also — you have a tiny nose scrunch when you\'re confused and it\'s the most adorable thing to ever exist. There. Now you\'re smiling. You\'re welcome. 😄💕'
+    },
+    night: {
+      emoji: '🌙',
+      title: 'Can\'t sleep? Neither can I.',
+      text: 'Some nights are just heavy. The thoughts get loud. But here\'s what I want you to do — breathe slowly, feel how soft the bed is, and remember you are loved. By the moon outside, by the stars that are still out there, and by me — especially by me. Sleep well, beautiful. I\'ll see you in the morning. 💤✨'
+    }
+  };
+
+  function openLetter(type) {
+    const l = letters[type];
+    document.getElementById('modalEmoji').textContent = l.emoji;
+    document.getElementById('modalTitle').textContent = l.title;
+    document.getElementById('modalText').textContent = l.text;
+    document.getElementById('modal').classList.add('active');
+  }
+
+  function closeLetter() {
+    document.getElementById('modal').classList.remove('active');
+  }
+
+  document.getElementById('modal').addEventListener('click', function(e) {
+    if (e.target === this) closeLetter();
+  });
+
+  // Reasons
+  const reasons = [
+    "The way your eyes light up when you talk about something you love.",
+    "You make even the most ordinary moments feel special.",
+    "Your laugh — it's my favorite sound in the universe.",
+    "How strong you are, even when you don't realize it.",
+    "The way you care so deeply about everything.",
+    "You make me want to be a better person every single day.",
+    "Your kindness — it's rare and it's beautiful.",
+    "The way you're completely, unapologetically yourself.",
+    "How you make me feel at home just by being near.",
+    "Every little thing about you that I discover new every day.",
+    "The way you handle hard things with grace I admire.",
+    "You chose me — and that means the world to me.",
+  ];
+
+  let reasonIdx = 0;
+  function nextReason() {
+    reasonIdx = (reasonIdx + 1) % reasons.length;
+    document.getElementById('reasonNum').textContent = `Reason #${reasonIdx + 1}`;
+    const el = document.getElementById('reasonText');
+    el.style.animation = 'none';
+    el.offsetHeight;
+    el.style.animation = 'fadeInUp 0.5s ease';
+    el.textContent = '"' + reasons[reasonIdx] + '"';
+    launchConfetti();
+  }
+
+  // Initial reason
+  document.getElementById('reasonText').textContent = '"' + reasons[0] + '"';
+
+  // Mood lift
+  const hugs = [
+    "Sending you the biggest, warmest hug right now. 🤗 You are so loved.",
+    "Hey. You're doing amazing. Even if it doesn't feel like it. 💕",
+    "Take a deep breath. In... and out. I've got you. 🌸",
+    "This is your reminder that you are the most wonderful person I know. ✨",
+    "Tough times are temporary. But my love for you? Permanent. 💝",
+    "You're not alone. Not even for a second. I'm always with you. 🫶",
+    "Rest your mind for a moment. You deserve peace and you deserve joy. 🌙",
+    "I'm proud of you for getting through today. Seriously. 💛",
+  ];
+
+  let hugIdx = 0;
+  function sendHug() {
+    hugIdx = (hugIdx + 1) % hugs.length;
+    const el = document.getElementById('moodMsg');
+    el.style.animation = 'none';
+    el.offsetHeight;
+    el.style.animation = 'fadeInUp 0.5s ease';
+    el.textContent = hugs[hugIdx];
+    launchConfetti();
+  }
+
+  // Affirmations
+  const affirmations = [
+    "You are allowed to have hard days. You are allowed to feel everything. That doesn't make you weak — it makes you human. And I love every version of you. 🌸",
+    "You are not 'too much'. You are exactly enough. The right people will always see that. 💖",
+    "Your value doesn't decrease on the days you can't give 100%. You are loved on your worst days just as much as your best. ✨",
+    "I see how hard you try. Even when no one else does. I see it, and I'm so proud of you. 💛",
+    "You deserve all the softness and love you so freely give to others. Start giving it to yourself too. 🌷",
+    "The fact that you care so deeply is your superpower. Don't let the world convince you otherwise. 🌟",
+  ];
+
+  let affirmIdx = 0;
+  function newAffirmation() {
+    affirmIdx = (affirmIdx + 1) % affirmations.length;
+    const el = document.getElementById('affirmText');
+    el.style.animation = 'none';
+    el.offsetHeight;
+    el.style.animation = 'fadeInUp 0.5s ease';
+    el.textContent = affirmations[affirmIdx];
+  }
+
+  // Confetti
+  function launchConfetti() {
+    const colors = ['#ff4d6d','#ffb3c1','#f4a261','#ffd6e0','#ffffff'];
+    for (let i = 0; i < 20; i++) {
+      const c = document.createElement('div');
+      c.className = 'confetti-piece';
+      c.style.left = Math.random() * 100 + 'vw';
+      c.style.top = '0';
+      c.style.background = colors[Math.floor(Math.random() * colors.length)];
+      c.style.animationDelay = Math.random() * 0.5 + 's';
+      c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 3000);
+    }
+  }
+
+  // Smooth scroll
+  document.querySelectorAll('nav a').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>
